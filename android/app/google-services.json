@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "603026748720",
+    "project_id": "tuks-tutor",
+    "storage_bucket": "tuks-tutor.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:603026748720:android:8604f7a2eba062251a84f5",
+        "android_client_info": {
+          "package_name": "com.tukstutor"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_Q5D-JdRe2oq88yMMrGO9fSWp_rXHoxk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:603026748720:android:c812607f9f731a271a84f5",
+        "android_client_info": {
+          "package_name": "com.tukstutor"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_Q5D-JdRe2oq88yMMrGO9fSWp_rXHoxk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
