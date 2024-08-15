@@ -1,8 +1,18 @@
 import "package:flutter/material.dart";
+import "package:tuks_tutor_dev/auth/auth_service.dart";
 import "package:tuks_tutor_dev/pages/settings_page.dart";
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
+
+  // Logout Method
+  void logout() {
+    // Get Auth Service
+    final authService = AuthService();
+
+    // Logout
+    authService.signOut();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +27,9 @@ class MyDrawer extends StatelessWidget {
               DrawerHeader(
                 child: Center(
                   child: Icon(
-                    Icons.message,
+                    Icons.school,
                     color: Theme.of(context).colorScheme.primary,
-                    size: 40,
+                    size: 100,
                   ),
                 ),
               ),
@@ -65,7 +75,7 @@ class MyDrawer extends StatelessWidget {
             child: ListTile(
               title: Text("L O G O U T"),
               leading: Icon(Icons.logout),
-              onTap: () {},
+              onTap: logout,
             ),
           )
         ],
