@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tuks_tutor_dev/auth/auth_service.dart';
+import 'package:tuks_tutor_dev/components/my_drawer.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -23,7 +24,7 @@ class HomePage extends StatelessWidget {
           )
         ],
       ),
-      drawer: Drawer(),
+      drawer:   MyDrawer(),
     );
   }
 }
