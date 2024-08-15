@@ -93,13 +93,9 @@ class LoginPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // Logo
-              Icon(
-                Icons.menu_book,
-                size: 120,
-                color: Theme.of(context).colorScheme.primary,
-              ),
+              Image.asset('lib/images/logo.png', height: 250),
 
-              const SizedBox(height: 50),
+              const SizedBox(height: 15),
 
               // Welcome Message
               Text(

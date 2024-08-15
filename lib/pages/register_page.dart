@@ -97,13 +97,9 @@ class RegisterPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // Logo
-              Icon(
-                Icons.manage_accounts,
-                size: 120,
-                color: Theme.of(context).colorScheme.primary,
-              ),
+              Icon(Icons.account_box, size: 125, color: Theme.of(context).colorScheme.primary),
 
-              const SizedBox(height: 50),
+              const SizedBox(height: 15),
 
               // Welcome Message
               Text(
