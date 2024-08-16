@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:tuks_tutor_dev/auth/auth_service.dart';
+import 'package:tuks_tutor_dev/components/user_tile.dart';
+import 'package:tuks_tutor_dev/pages/chat_page.dart';
+import 'package:tuks_tutor_dev/services/auth/auth_service.dart';
 import 'package:tuks_tutor_dev/components/my_drawer.dart';
+import 'package:tuks_tutor_dev/services/chat/chat_service.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
+
+  // Chat & Auth services
+  final ChatService _chatService = ChatService();
+  final AuthService _authService =AuthService();
 
   void logout() async {
     // Get Auth Service
@@ -16,15 +23,52 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Home"),
-        actions: [
-          // Logout Button
-          IconButton(
-            onPressed: logout,
-            icon: Icon(Icons.logout),
-          )
-        ],
       ),
       drawer:   MyDrawer(),
+      body: _buildUserList(),
+    );
+  }
+
+  // Build User List NOT Logged In User
+  Widget _buildUserList() {
+    return StreamBuilder(
+      stream: _chatService.getUsersStream(),
+      builder: (context, snapshot) {
+        // Error
+        if (snapshot.hasError) {
+          return const Text("Error");
+        }
+
+        // Loading...
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Text("Loading...");
+        }
+
+        // Return List View
+        return ListView(
+          children: snapshot.data!
+          .map<Widget>((userData) => _buildUserListItem(userData, context))
+          .toList(),
+        );
+      },
+    );
+  }
+  // Build User List Item
+  Widget _buildUserListItem(Map<String, dynamic> userData, BuildContext context) {
+    // Display all users except current logged in user
+    return UserTile(
+      text: userData["email"],
+      onTap: () {
+        // Tapped on user, go to chat page
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ChatPage(
+              receiverEmail: userData["email"],
+            ),
+          ),  
+        );
+      }
     );
   }
 }

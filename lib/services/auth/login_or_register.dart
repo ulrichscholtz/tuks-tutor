@@ -11,7 +11,7 @@ class LoginOrRegister extends StatefulWidget {
 }
 
 class _LoginOrRegisterState extends State<LoginOrRegister> {
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
 
   // Initially, show Login Page
   bool showLoginPage = true;

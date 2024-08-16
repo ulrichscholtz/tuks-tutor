@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tuks_tutor_dev/auth/auth_service.dart';
+import 'package:tuks_tutor_dev/services/auth/auth_service.dart';
 import 'package:tuks_tutor_dev/components/my_button.dart';
 import 'package:tuks_tutor_dev/components/my_textfield.dart';
 
