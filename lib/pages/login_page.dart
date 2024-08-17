@@ -55,30 +55,58 @@ class LoginPage extends StatelessWidget {
 
     // Catch Errors
     catch (e) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text(
-            "Email or Password is incorrect.",
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.error,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
+      // Check if error is network error
+      if (e.toString().contains("network")) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text(
+              "Network Error",
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.error,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            content: Text(
+              "Please check your ",
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.error,
+                fontSize: 16,
+              ),
+            ),
+            backgroundColor: Theme.of(context).colorScheme.background,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
             ),
           ),
-          content: Text(
-            "Please try again.",
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.error,
-              fontSize: 16,
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text(
+              "Email or Password is incorrect.",
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.error,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            content: Text(
+              "Please try again.",
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.error,
+                fontSize: 16,
+              ),
+            ),
+            backgroundColor: Theme.of(context).colorScheme.background,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
             ),
           ),
-          backgroundColor: Theme.of(context).colorScheme.background,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-      );
+        );
+      }
     }
   }
 
@@ -165,3 +193,4 @@ class LoginPage extends StatelessWidget {
     );
   }
 }
+

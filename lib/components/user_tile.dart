@@ -18,17 +18,26 @@ class UserTile extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.secondary,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(40),
           ),
-          margin: EdgeInsets.symmetric(vertical: 5),
-          padding: EdgeInsets.all(20),
+          margin: EdgeInsets.symmetric(vertical: 7),
+          padding: EdgeInsets.all(15),
           child: Row(
             children: [
-              // Icon
-              Icon(Icons.person),
-
+              // Avatar
+              CircleAvatar(
+                radius: 20,
+                backgroundColor: const Color(0xFFDF3840),
+                child: Text(
+                  text[0],
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
               const SizedBox(width: 20,),
-
               // Username
               Text(text),
             ],
@@ -38,4 +47,5 @@ class UserTile extends StatelessWidget {
     );
   }
 }
+
 

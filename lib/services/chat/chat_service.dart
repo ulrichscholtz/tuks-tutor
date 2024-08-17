@@ -64,4 +64,8 @@ class ChatService {
     .orderBy("timestamp", descending: false)
     .snapshots();
   }
+
+  getUsersStreamByType(String sortType) {}
+
+  clearChat(String receiverID) {}
 }

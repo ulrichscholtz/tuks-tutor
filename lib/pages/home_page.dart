@@ -40,13 +40,17 @@ class HomePage extends StatelessWidget {
         }
 
         // Loading...
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Text("Loading...");
+        if(snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: const Center(child: Text("Loading users...")),
+          );
         }
 
         // Return List View
+        List<Map<String, dynamic>> users = snapshot.data!.toList();
+        users.sort((a, b) => a["email"].split('@')[0].compareTo(b["email"].split('@')[0]));
         return ListView(
-          children: snapshot.data!
+          children: users
           .map<Widget>((userData) => _buildUserListItem(userData, context))
           .toList(),
         );
@@ -58,7 +62,7 @@ class HomePage extends StatelessWidget {
     // Display all users except current logged in user
     if (userData["email"] != _authService.getCurrentUser()!.email) {
       return UserTile(
-      text: userData["email"],
+      text: userData["email"].split('@')[0],
       onTap: () {
         // Tapped on user, go to chat page
         Navigator.push(
@@ -77,3 +81,4 @@ class HomePage extends StatelessWidget {
     }
   }
 }
+
