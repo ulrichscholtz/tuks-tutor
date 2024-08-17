@@ -90,9 +90,9 @@ class _ChatPageState extends State<ChatPage> {
               ],
             ),
           ),
-          backgroundColor: Colors.white,
-          shadowColor: Colors.transparent,
-          elevation: 0.0,
+          backgroundColor: Colors.transparent,
+          foregroundColor: Colors.grey,
+          elevation: 0,
         ),
         body: Column(
           children: [
@@ -150,7 +150,12 @@ class _ChatPageState extends State<ChatPage> {
       alignment: alignment,
       child: Column(
         children: [
-          ChatBubble(message: data["message"], isCurrentUser: isCurrentUser,)
+          ChatBubble(
+            message: data["message"],
+            isCurrentUser: isCurrentUser,
+            messageID: doc.id,
+            userID: data["senderID"],
+          )
         ],
       ),
     );
@@ -182,11 +187,6 @@ class _ChatPageState extends State<ChatPage> {
             child: IconButton(
               onPressed: () {
                 sendMessage();
-                _messageController.clear();
-                // Scroll down to the new maximum after every message
-                Future.delayed(const Duration(milliseconds: 500), () {
-                  ScrollDown();
-                });
               },
               icon: Icon(Icons.arrow_upward, color: Colors.white),
             ),
@@ -205,8 +205,14 @@ class _ChatPageState extends State<ChatPage> {
 
       // Clear the text controller
       _messageController.clear();
+
+      // Scroll down to the new maximum after every message
+      Future.delayed(const Duration(milliseconds: 500), () {
+        ScrollDown();
+      });
     }
   }
 }
+
 
 

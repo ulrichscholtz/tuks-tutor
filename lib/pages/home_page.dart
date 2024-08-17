@@ -22,7 +22,9 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home"),
+        title: Text("C H A T S"),
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.grey,
       ),
       drawer:   MyDrawer(),
       body: _buildUserList(),
@@ -32,7 +34,7 @@ class HomePage extends StatelessWidget {
   // Build User List NOT Logged In User
   Widget _buildUserList() {
     return StreamBuilder(
-      stream: _chatService.getUsersStream(),
+      stream: _chatService.getUsersStreamExludingBlocked(),
       builder: (context, snapshot) {
         // Error
         if (snapshot.hasError) {
