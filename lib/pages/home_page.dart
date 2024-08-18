@@ -27,7 +27,20 @@ class HomePage extends StatelessWidget {
         foregroundColor: Colors.grey,
       ),
       drawer:   MyDrawer(),
-      body: _buildUserList(),
+      body: StreamBuilder(
+        stream: _chatService.getUsersStreamExludingBlocked(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+            return _buildUserList();
+          } else {
+            return Center(
+              child: Text(
+                "No students or tutors available.",
+              ),
+            );
+          }
+        },
+      ),
     );
   }
 
@@ -44,8 +57,8 @@ class HomePage extends StatelessWidget {
         // Loading...
         if(snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
-            child: const Center(child: Text("Loading users...")),
-          );
+              child: CircularProgressIndicator(),
+            );
         }
 
         // Return List View

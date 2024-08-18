@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:tuks_tutor_dev/services/chat/chat_service.dart';
 
@@ -108,6 +107,8 @@ class ChatBubble extends StatelessWidget {
               ChatService().blockUser(userID);
               // Block user
               Navigator.pop(context);
+              // Leaves the chat page
+              Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   content: Text('User Blocked!'),
@@ -134,11 +135,11 @@ class ChatBubble extends StatelessWidget {
         decoration: BoxDecoration(
           color: isCurrentUser
               ? Color(0xFFDF3840)
-              : Colors.grey.shade500,
+              : const Color(0xFF005BAB),
           borderRadius: BorderRadius.circular(20),
         ),
         padding: const EdgeInsets.all(10),
-        margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+        margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
         child: Text(
           message,
           style: TextStyle(

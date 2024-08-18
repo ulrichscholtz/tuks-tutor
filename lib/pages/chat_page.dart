@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:tuks_tutor_dev/components/chat_bubble.dart';
 import 'package:tuks_tutor_dev/components/my_textfield.dart';
 import 'package:tuks_tutor_dev/services/auth/auth_service.dart';
@@ -113,18 +112,19 @@ class _ChatPageState extends State<ChatPage> {
   Widget _buildMessageList() {
     String senderID = _authService.getCurrentUser()!.uid;
     return StreamBuilder(
+      // Get messages
       stream: _chatService.getMessages(widget.receiverID, senderID),
       builder: (context, snapshot) {
         // Errors
         if (snapshot.hasError) {
-          return const Text("Error");
+          return const Text("Error loading messages.");
         }
 
         // Loading
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
-            child: const Center(child: Text("Loading messages...")),
-          );
+              child: CircularProgressIndicator(),
+            );
         }
 
         // Return list view

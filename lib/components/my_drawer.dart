@@ -26,13 +26,12 @@ class MyDrawer extends StatelessWidget {
             children: [
               DrawerHeader(
                 child: Center(
-                  child: Icon(
-                    Icons.school,
-                    color: Theme.of(context).colorScheme.primary,
-                    size: 100,
-                  ),
+                  child: Image.asset('lib/images/drawer.png'),
+                  widthFactor: 0.8,
                 ),
               ),
+
+              const SizedBox(height: 20,),
 
               //Home List Tile
               Padding(

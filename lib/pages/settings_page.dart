@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tuks_tutor_dev/pages/blocked_users_page.dart';
 import 'package:tuks_tutor_dev/pages/home_page.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -43,10 +44,13 @@ class SettingsPage extends StatelessWidget {
                     onPressed: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => HomePage(),
+                        builder: (context) => BlockedUsersPage(),
                       ),
                     ),
-                    icon: Icon(Icons.arrow_forward_rounded),
+                    icon: Icon(
+                      Icons.arrow_forward_rounded,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
                   ),
                 ],
               ),

@@ -69,7 +69,7 @@ class LoginPage extends StatelessWidget {
               ),
             ),
             content: Text(
-              "Please check your ",
+              "Please check your connection.",
               style: TextStyle(
                 color: Theme.of(context).colorScheme.error,
                 fontSize: 16,

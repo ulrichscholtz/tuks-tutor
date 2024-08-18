@@ -97,7 +97,7 @@ class RegisterPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // Logo
-              Icon(Icons.account_box, size: 125, color: Theme.of(context).colorScheme.primary),
+              Icon(Icons.account_circle, size: 125, color: Color(0xFF005BAB)),
 
               const SizedBox(height: 15),
 
