@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:tuks_tutor_dev/services/notifications/notification_service.dart';
 
 class AuthService {
   // Instance of Auth
@@ -26,8 +27,12 @@ class AuthService {
         {
           'uid': userCredential.user!.uid,
           'email': email,
-        }
+        },
+        SetOptions(merge: true),
       );
+
+      // Save device token
+      NotificationService().setupTokenListeners();
 
       return userCredential;
     } on FirebaseAuthException catch (e) {
@@ -52,6 +57,9 @@ class AuthService {
         }
       );
 
+      // Save device token
+      NotificationService().setupTokenListeners();
+
       return userCredential;
     } on FirebaseAuthException catch (e) {
       throw Exception(e.code);
@@ -60,7 +68,13 @@ class AuthService {
 
   // Sign Out
   Future<void> signOut() async {
-    await _auth.signOut();
+    // Get current user
+    String? userID = _auth.currentUser?.uid;
+    // To clear current user token
+    if (userID != null) {
+      await NotificationService().clearTokenOnLogout(userID);
+    }
+    return await _auth.signOut();
   }
 
   // Errors
