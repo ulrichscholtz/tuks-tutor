@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
 import 'package:tuks_tutor_dev/services/auth/auth_gate.dart';
 import 'package:tuks_tutor_dev/firebase_options.dart';
 import 'package:tuks_tutor_dev/services/notifications/notification_service.dart';
@@ -34,6 +35,9 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: AuthGate(),
