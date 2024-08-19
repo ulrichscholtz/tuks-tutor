@@ -7,11 +7,11 @@ import 'package:tuks_tutor_dev/components/my_drawer.dart';
 import 'package:tuks_tutor_dev/services/chat/chat_service.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  HomePage({Key? key}) : super(key: key);
 
   // Chat & Auth services
   final ChatService _chatService = ChatService();
-  final AuthService _authService =AuthService();
+  final AuthService _authService = AuthService();
 
   void logout() async {
     // Get Auth Service
@@ -24,7 +24,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,26 +32,20 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.grey,
       ),
-      drawer:   MyDrawer(),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          // Refresh the stream
-          widget._chatService.getUsersStreamExludingBlocked().first;
+      drawer: MyDrawer(),
+      body: StreamBuilder(
+        stream: widget._chatService.getUsersStreamExludingBlocked(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+            return _buildUserList();
+          } else {
+            return Center(
+              child: Text(
+                "No chats yet, add a chat with the chat button.",
+              ),
+            );
+          }
         },
-        child: StreamBuilder(
-          stream: widget._chatService.getUsersStreamExludingBlocked(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-              return _buildUserList();
-            } else {
-              return Center(
-                child: Text(
-                  "No chats yet, add a chat with the chat button.",
-                ),
-              );
-            }
-          },
-        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -80,10 +73,10 @@ class _HomePageState extends State<HomePage> {
         }
 
         // Loading...
-        if(snapshot.connectionState == ConnectionState.waiting) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
-              child: CircularProgressIndicator(),
-            );
+            child: CircularProgressIndicator(),
+          );
         }
 
         // Return List View
@@ -91,35 +84,35 @@ class _HomePageState extends State<HomePage> {
         users.sort((a, b) => a["email"].split('@')[0].compareTo(b["email"].split('@')[0]));
         return ListView(
           children: users
-          .map<Widget>((userData) => _buildUserListItem(userData, context))
-          .toList(),
+              .map<Widget>((userData) => _buildUserListItem(userData, context))
+              .toList(),
         );
       },
     );
   }
+
   // Build User List Item
   Widget _buildUserListItem(Map<String, dynamic> userData, BuildContext context) {
     // Display all users except current logged in user
     if (userData["email"] != widget._authService.getCurrentUser()!.email) {
       return UserTile(
-      text: userData['studentnr'] + ' | ' + userData['email'].split('@')[0],
-      onTap: () {
-        // Tapped on user, go to chat page
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ChatPage(
-              receiverEmail: userData["email"],
-              receiverID: userData["uid"],
+        text: userData['studentnr'] + ' | ' + userData['email'].split('@')[0],
+        onTap: () {
+          // Tapped on user, go to chat page
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ChatPage(
+                receiverEmail: userData["email"],
+                receiverID: userData["uid"],
+              ),
             ),
-          ),  
-        );
-      }
-    );
+          );
+        },
+      );
     } else {
       return Container();
     }
   }
 }
-
 
