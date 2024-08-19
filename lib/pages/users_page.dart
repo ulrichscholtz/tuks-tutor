@@ -79,7 +79,15 @@ class _HomePageState extends State<UsersPage> {
                 builder: (context, snapshot) {
                   if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                     return _buildUserList(snapshot.data!);
-                  } else {
+                  } 
+                  
+                  // Loading...
+                  if(snapshot.connectionState == ConnectionState.waiting) {
+                   return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+        }
+                  else {
                     return Center(
                       child: Text(
                         "No students or tutors available, swipe down to refresh",
@@ -134,5 +142,6 @@ class _HomePageState extends State<UsersPage> {
     }
   }
 }
+
 
 
