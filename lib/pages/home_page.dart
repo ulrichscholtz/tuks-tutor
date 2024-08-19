@@ -34,19 +34,25 @@ class _HomePageState extends State<HomePage> {
         foregroundColor: Colors.grey,
       ),
       drawer:   MyDrawer(),
-      body: StreamBuilder(
-        stream: widget._chatService.getUsersStreamExludingBlocked(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-            return _buildUserList();
-          } else {
-            return Center(
-              child: Text(
-                "No chats yet, add a chat with the chat button.",
-              ),
-            );
-          }
+      body: RefreshIndicator(
+        onRefresh: () async {
+          // Refresh the stream
+          widget._chatService.getUsersStreamExludingBlocked().first;
         },
+        child: StreamBuilder(
+          stream: widget._chatService.getUsersStreamExludingBlocked(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+              return _buildUserList();
+            } else {
+              return Center(
+                child: Text(
+                  "No chats yet, add a chat with the chat button.",
+                ),
+              );
+            }
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -115,4 +121,5 @@ class _HomePageState extends State<HomePage> {
     }
   }
 }
+
 
