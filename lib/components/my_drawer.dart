@@ -1,4 +1,6 @@
 import "package:flutter/material.dart";
+import "package:tuks_tutor_dev/pages/home_page.dart";
+import "package:tuks_tutor_dev/pages/users_page.dart";
 import "package:tuks_tutor_dev/services/auth/auth_service.dart";
 import "package:tuks_tutor_dev/pages/settings_page.dart";
 
@@ -42,6 +44,32 @@ class MyDrawer extends StatelessWidget {
                   onTap: () {
                     //Pop the Drawer
                     Navigator.pop(context);
+
+                    Navigator.push(
+                      context, 
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(),
+                      )
+                    );
+                  },
+                ),
+              ),
+
+               Padding(
+                padding: const EdgeInsets.only(left: 25.0),
+                child: ListTile(
+                  title: const Text("S E A R C H  U S E R S"),
+                  leading: const Icon(Icons.search),
+                  onTap: () {
+                    //Pop the Drawer
+                    Navigator.pop(context);
+
+                    Navigator.push(
+                      context, 
+                      MaterialPageRoute(
+                        builder: (context) => UsersPage(),
+                      )
+                    );
                   },
                 ),
               ),

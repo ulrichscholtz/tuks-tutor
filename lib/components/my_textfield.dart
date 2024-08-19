@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class MyTextField extends StatelessWidget {
   final String hintText;
   final bool obscureText;
   final TextEditingController controller;
   final FocusNode? focusNode;
+  final List<TextInputFormatter> inputFormatters;
 
   const MyTextField({
     super.key,
@@ -12,6 +14,7 @@ class MyTextField extends StatelessWidget {
     required this.obscureText,
     required this.controller,
     this.focusNode,
+    this.inputFormatters = const [],
   });
 
   @override
@@ -21,6 +24,7 @@ class MyTextField extends StatelessWidget {
       child: TextField(
         obscureText: obscureText,
         controller: controller,
+        inputFormatters: inputFormatters,
         focusNode: focusNode,
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(

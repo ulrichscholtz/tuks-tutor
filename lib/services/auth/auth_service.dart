@@ -40,7 +40,7 @@ class AuthService {
     }
   }
   // Sign Up
-  Future<UserCredential> signUpWithEmailPassword(String email, password) async {
+  Future<UserCredential> signUpWithEmailPassword(String studentnr, email, password) async {
     try {
       // Create User
       UserCredential userCredential = 
@@ -54,6 +54,7 @@ class AuthService {
         {
           'uid': userCredential.user!.uid,
           'email': email,
+          'studentnr': studentnr, 
         }
       );
 

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tuks_tutor_dev/services/auth/auth_service.dart';
 import 'package:tuks_tutor_dev/components/my_button.dart';
 import 'package:tuks_tutor_dev/components/my_textfield.dart';
 
 class RegisterPage extends StatelessWidget {
 
-  //Text Controllers
+  // Text Controllers
+
+  final TextEditingController _studentNrController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _pwController =TextEditingController();
   final TextEditingController _confirmPwController =TextEditingController();
@@ -25,7 +28,7 @@ class RegisterPage extends StatelessWidget {
     final authService = AuthService();
 
     // Check that all fields are filled
-    if (_emailController.text.isEmpty || _pwController.text.isEmpty || _confirmPwController.text.isEmpty) {
+    if (/*ToDo: _studentNrController.text.isEmpty || */_emailController.text.isEmpty || _pwController.text.isEmpty || _confirmPwController.text.isEmpty) {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -50,9 +53,10 @@ class RegisterPage extends StatelessWidget {
     }
 
     // If passwords match -> get user
-    if (_pwController.text == _confirmPwController.text) {
+    if (_pwController.text == _confirmPwController.text && _studentNrController.text.length >= 8) {
+      // Check that all fields are filled
       try {
-        authService.signUpWithEmailPassword(_emailController.text, _pwController.text);
+        authService.signUpWithEmailPassword(_studentNrController.text, _emailController.text, _pwController.text);
       } catch (e) {
         showDialog(
           context: context,
@@ -62,8 +66,7 @@ class RegisterPage extends StatelessWidget {
         );
       }
     }
-    // If passwords don't match -> show error
-    else {
+    if (_pwController.text != _confirmPwController.text) {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -84,6 +87,28 @@ class RegisterPage extends StatelessWidget {
           ),
         ),
       );
+    }else if (_studentNrController.text.length < 8) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text(
+              "Student Number must be 8 digits long.",
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.error,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            content: Text(
+              "Student number too short",
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.error,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        );
+        return;
     }
   }
   @override
@@ -111,6 +136,20 @@ class RegisterPage extends StatelessWidget {
               ),
 
               const SizedBox(height: 25),
+
+              
+              // Student Number Textfield
+              MyTextField(
+                obscureText: false,
+                hintText: "Student Number",
+                controller: _studentNrController,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  LengthLimitingTextInputFormatter(8),
+                ],
+              ),
+              
+              const SizedBox(height: 10),
 
               // Email Textfield
               MyTextField(

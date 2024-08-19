@@ -28,18 +28,17 @@ class UserTile extends StatelessWidget {
               CircleAvatar(
                 radius: 20,
                 backgroundColor: const Color(0xFFDF3840),
-                child: Text(
-                  text[0],
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+                child: Icon(
+                  Icons.school_outlined,
+                  color: Colors.white,
+                  size: 22,
                 ),
               ),
               const SizedBox(width: 20,),
               // Username
-              Text(text),
+              Text(
+                text,
+              ),
             ],
           ),
         ),
