@@ -1,8 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:tuks_tutor_dev/components/my_settings_list_tile.dart';
 import 'package:tuks_tutor_dev/pages/blocked_users_page.dart';
+import 'package:tuks_tutor_dev/services/auth/auth_service.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
+
+ // User account deletion method
+  Future<void> userWantsToDeleteAccount(BuildContext context) async {
+
+    // Store user's decision in this boolean
+    bool confirm = await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Confirm Deletion"),
+          content: const Text("Are you sure you want to delete your account?"),
+          actions: [
+            // Cancel Button
+            MaterialButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              color: Theme.of(context).colorScheme.inversePrimary,
+              child: Text("Cancel", style: TextStyle(color: Theme.of(context).colorScheme.background),),
+            ),
+            // Confirm Button
+            MaterialButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              color: Theme.of(context).colorScheme.inversePrimary,
+              child: Text(
+                "Delete",
+                style: TextStyle(color: Theme.of(context).colorScheme.background),
+              ),
+            ),
+          ],
+        );
+      },
+    ) ?? false;
+
+    // If the user confirms, delete their account
+    if (confirm) {
+      try {
+        Navigator.pop(context);
+        await AuthService().deleteAccount();
+      } catch (e) {
+        // Handle any errors
+      }
+  }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -15,44 +59,35 @@ class SettingsPage extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.secondary,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              margin: const EdgeInsets.only(
-                left: 25, top: 10, right: 25
-              ),
-              padding: const EdgeInsets.only(
-                left: 25, right: 25, top: 20, bottom: 20
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // Title
-                  Text(
-                    "Blocked Users",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.inversePrimary,
-                    ),
+            // Blocked Users
+            MySettingsListTile(
+              title: "Blocked Users",
+              textColor: Theme.of(context).colorScheme.inversePrimary,
+              action:  IconButton(
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => BlockedUsersPage(),
                   ),
-                  // Button to go to blocked user page
-                  IconButton(
-                    onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => BlockedUsersPage(),
-                      ),
-                    ),
-                    icon: Icon(
-                      Icons.arrow_forward_rounded,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
-                ],
+                ),
+                icon: Icon(
+                  Icons.arrow_forward_rounded,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
               ),
+              color: Theme.of(context).colorScheme.secondary,
             ),
+            MySettingsListTile(
+              title: "Delete Account", 
+              textColor: Theme.of(context).colorScheme.tertiary,
+              action: IconButton(
+                onPressed: () => userWantsToDeleteAccount(context),
+                icon: Icon(
+                  Icons.arrow_forward_rounded,
+                  color: Theme.of(context).colorScheme.tertiary,
+                ),
+              ),
+              color: Colors.red.shade400,),
           ],
         ),
       ),
