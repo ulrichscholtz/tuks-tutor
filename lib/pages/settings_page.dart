@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tuks_tutor_dev/components/my_settings_list_tile.dart';
 import 'package:tuks_tutor_dev/pages/blocked_users_page.dart';
+import 'package:tuks_tutor_dev/pages/profile_page.dart';
 import 'package:tuks_tutor_dev/services/auth/auth_service.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -59,8 +60,28 @@ class SettingsPage extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
+            // Profile Page
+            MySettingsListTile(
+              icon: Icon(Icons.person, color: Theme.of(context).colorScheme.inversePrimary),
+              title: "My Profile",
+              textColor: Theme.of(context).colorScheme.inversePrimary,
+              action:  IconButton(
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProfilePage(),
+                  ),
+                ),
+                icon: Icon(
+                  Icons.arrow_forward_rounded,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+              color: Theme.of(context).colorScheme.secondary,
+            ),
             // Blocked Users
             MySettingsListTile(
+              icon: Icon(Icons.block, color: Theme.of(context).colorScheme.inversePrimary),
               title: "Blocked Users",
               textColor: Theme.of(context).colorScheme.inversePrimary,
               action:  IconButton(
@@ -77,7 +98,9 @@ class SettingsPage extends StatelessWidget {
               ),
               color: Theme.of(context).colorScheme.secondary,
             ),
+            // Delete Account
             MySettingsListTile(
+              icon: Icon(Icons.delete, color: Theme.of(context).colorScheme.tertiary),
               title: "Delete Account", 
               textColor: Theme.of(context).colorScheme.tertiary,
               action: IconButton(

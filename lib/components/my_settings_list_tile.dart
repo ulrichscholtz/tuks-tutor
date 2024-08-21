@@ -6,13 +6,15 @@ class MySettingsListTile extends StatelessWidget {
     required this.action,
     required this.color,
     required this.textColor,
-    super.key
+    required this.icon,
+    super.key,
   });
 
   final String title;
   final Widget action;
   final Color color;
   final Color textColor;
+  final Icon icon;
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +32,18 @@ class MySettingsListTile extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Title
-                  Text(title,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: textColor,
-                    ),
+                  Row(
+                    children: [
+                      icon,
+                      const SizedBox(width: 20),
+                      // Title
+                      Text(title,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: textColor,
+                        ),
+                      ),
+                    ],
                   ),
                   // Action
                   action,
@@ -43,6 +51,7 @@ class MySettingsListTile extends StatelessWidget {
               ),
             );
   }
+
 }
 
  

@@ -41,7 +41,8 @@ class _HomePageState extends State<HomePage> {
           } else {
             return Center(
               child: Text(
-                "No chats yet, add a chat with the chat button.",
+                "N O  C H A T S",
+                style: TextStyle(color: Theme.of(context).colorScheme.primary),
               ),
             );
           }
@@ -56,7 +57,7 @@ class _HomePageState extends State<HomePage> {
             ),
           );
         },
-        child: Icon(Icons.chat, color: Colors.white),
+        child: Icon(Icons.search, color: Colors.white),
         backgroundColor: Colors.red,
       ),
     );

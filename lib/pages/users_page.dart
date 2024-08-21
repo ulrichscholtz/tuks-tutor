@@ -90,7 +90,8 @@ class _HomePageState extends State<UsersPage> {
                   else {
                     return Center(
                       child: Text(
-                        "No students or tutors available, swipe down to refresh",
+                        "N O  U S E R S  F O U N D",
+                        style: TextStyle(color: Theme.of(context).colorScheme.primary),
                       ),
                     );
                   }
