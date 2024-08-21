@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+  ProfilePage({super.key});
+
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +25,41 @@ class ProfilePage extends StatelessWidget {
             color: Theme.of(context).colorScheme.primary,
           ),
           Center(
-            child: Text(
-              FirebaseAuth.instance.currentUser!.email!,
-              style: TextStyle(
-                fontSize: 20,
-                color: Theme.of(context).colorScheme.primary,
-              ),
+            child: Column(
+              children: [
+                StreamBuilder<DocumentSnapshot>(
+                  stream: _firestore.collection("Users").doc(_auth.currentUser!.uid).snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return Text(
+                        snapshot.data!["studentnr"],
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      );
+                    } else {
+                      return Text(
+                        "Loading...",
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      );
+                    }
+                  },
+                ),
+                const SizedBox(height: 10),
+                Container(
+                  child: Text(
+                    _auth.currentUser!.email!,
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ]
