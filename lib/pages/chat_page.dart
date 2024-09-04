@@ -82,9 +82,35 @@ class _ChatPageState extends State<ChatPage> {
             padding: const EdgeInsets.only(left: 15.0),
             child: Row(
               children: [
-                Text(
-                  widget.receiverEmail.split('@')[0],
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                Row(
+                  children: [
+                    Text(
+                      widget.receiverEmail.split('@')[0],
+                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(width: 5),
+                    const Text(
+                      '|',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    const SizedBox(width: 5),
+                    FutureBuilder(
+                      future: FirebaseFirestore.instance
+                          .collection('Users')
+                          .doc(widget.receiverID)
+                          .get(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return Text(
+                            snapshot.data!['usertype'],
+                            style: const TextStyle(fontSize: 18),
+                          );
+                        } else {
+                          return Container();
+                        }
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),

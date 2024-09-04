@@ -4,16 +4,8 @@ import 'package:tuks_tutor_dev/services/auth/auth_service.dart';
 import 'package:tuks_tutor_dev/components/my_button.dart';
 import 'package:tuks_tutor_dev/components/my_textfield.dart';
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
 
-  // Text Controllers
-
-  final TextEditingController _studentNrController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _pwController =TextEditingController();
-  final TextEditingController _confirmPwController =TextEditingController();
-
-  // Tap for Login
   final void Function()? onTap;
 
 
@@ -21,6 +13,22 @@ class RegisterPage extends StatelessWidget {
     super.key,
     required this.onTap,
   });
+
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  // Text Controllers
+  final TextEditingController _studentNrController = TextEditingController();
+
+  final TextEditingController _emailController = TextEditingController();
+
+  final TextEditingController _pwController =TextEditingController();
+
+  final TextEditingController _confirmPwController =TextEditingController();
+
+  String _selectedUserType = 'Student';
 
   //Register Method
   void register(BuildContext context) {
@@ -56,7 +64,8 @@ class RegisterPage extends StatelessWidget {
     if (_pwController.text == _confirmPwController.text && _studentNrController.text.length >= 8) {
       // Check that all fields are filled
       try {
-        authService.signUpWithEmailPassword(_studentNrController.text, _emailController.text, _pwController.text);
+        String userType = _selectedUserType == 'Student' ? 'Student' : 'Tutor';
+        authService.signUpWithEmailPassword(_studentNrController.text, _emailController.text, _pwController.text, userType);
       } catch (e) {
         showDialog(
           context: context,
@@ -111,6 +120,7 @@ class RegisterPage extends StatelessWidget {
         return;
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -137,6 +147,34 @@ class RegisterPage extends StatelessWidget {
 
               const SizedBox(height: 25),
 
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(width: 1, color: Theme.of(context).colorScheme.primary),
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ToggleButtons(
+                      onPressed: (index) {
+                        setState(() {
+                          _selectedUserType = index == 0 ? 'Student' : 'Tutor';
+                        });
+                      },
+                      isSelected: [_selectedUserType == 'Student', _selectedUserType == 'Tutor'],
+                      children: [
+                        Icon(Icons.school_outlined, size: 24),
+                        Icon(Icons.supervisor_account_outlined, size: 24),
+                      ],
+                    ),
+                    SizedBox(width: 16),
+                    Text(_selectedUserType, style: TextStyle(fontSize: 16)),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 25),
               
               // Student Number Textfield
               MyTextField(
@@ -197,7 +235,7 @@ class RegisterPage extends StatelessWidget {
                     ),
                   ),
                   GestureDetector(
-                    onTap: onTap,
+                    onTap: widget.onTap,
                     child: Text(
                       "Login now",
                       style: TextStyle(
@@ -215,3 +253,4 @@ class RegisterPage extends StatelessWidget {
     );
   }
 }
+

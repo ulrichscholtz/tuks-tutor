@@ -40,32 +40,32 @@ class AuthService {
     }
   }
   // Sign Up
-  Future<UserCredential> signUpWithEmailPassword(String studentnr, email, password) async {
-    try {
-      // Create User
-      UserCredential userCredential = 
-        await _auth.createUserWithEmailAndPassword(
-          email: email, 
-          password: password
-        );
-      
-      // Save user info in a seperate doc
-      _firestore.collection("Users").doc(userCredential.user!.uid).set(
-        {
-          'uid': userCredential.user!.uid,
-          'email': email,
-          'studentnr': studentnr, 
-        }
-      );
+  Future<UserCredential> signUpWithEmailPassword(String studentNr, String email, String password, String userType) async {
+  try {
+    // Create User
+    UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+      email: email, 
+      password: password
+    );
+    
+    // Save user info in a separate doc
+    _firestore.collection("Users").doc(userCredential.user!.uid).set(
+      {
+        'uid': userCredential.user!.uid,
+        'email': email,
+        'studentnr': studentNr, 
+        'usertype': userType,
+      }
+    );
 
-      // Save device token
-      NotificationService().setupTokenListeners();
+    // Save device token
+    NotificationService().setupTokenListeners();
 
-      return userCredential;
-    } on FirebaseAuthException catch (e) {
-      throw Exception(e.code);
-    }
+    return userCredential;
+  } on FirebaseAuthException catch (e) {
+    throw Exception(e.code);
   }
+}
 
   // Sign Out
   Future<void> signOut() async {
