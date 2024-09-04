@@ -33,20 +33,25 @@ class _HomePageState extends State<HomePage> {
         foregroundColor: Colors.grey,
       ),
       drawer: MyDrawer(),
-      body: StreamBuilder(
-        stream: widget._chatService.getUsersStreamExludingBlocked(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-            return _buildUserList();
-          } else {
-            return Center(
-              child: Text(
-                "N O  C H A T S",
-                style: TextStyle(color: Theme.of(context).colorScheme.primary),
-              ),
-            );
-          }
+      body: RefreshIndicator(
+        onRefresh: () async {
+          setState(() {});
         },
+        child: StreamBuilder(
+          stream: widget._chatService.getUsersStreamExludingBlocked(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+              return _buildUserList();
+            } else {
+              return Center(
+                child: Text(
+                  "N O  C H A T S",
+                  style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                ),
+              );
+            }
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -96,8 +101,13 @@ class _HomePageState extends State<HomePage> {
   Widget _buildUserListItem(Map<String, dynamic> userData, BuildContext context) {
     // Display all users except current logged in user
     if (userData["email"] != widget._authService.getCurrentUser()!.email) {
+      String userText = '${userData['studentnr']} | ${userData['email'].split('@')[0]}';
+      if (userData["usertype"] == "Tutor") {
+        userText += ' | ${userData['tutoring']} Tutor';
+      }
+
       return UserTile(
-        text: userData['studentnr'] + ' | ' + userData['email'].split('@')[0],
+        text: userText,
   onTap: () {
     // Tapped on user, go to chat page
     Navigator.push(

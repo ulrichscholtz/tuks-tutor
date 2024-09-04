@@ -32,7 +32,7 @@ class UserTile extends StatelessWidget {
                 radius: 20,
                 backgroundColor: userType == 'Tutor' ? Color(0xFF005BAB) : Color(0xFFDF3840), // Set the avatar color based on the user type
                 child: Icon(
-                  Icons.school_outlined,
+                  userType == 'Tutor' ? Icons.book_outlined : Icons.school_outlined,
                   color: Colors.white,
                   size: 22,
                 ),

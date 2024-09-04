@@ -139,7 +139,7 @@ class ChatBubble extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
         ),
         padding: const EdgeInsets.all(10),
-        margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+        margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
         child: Text(
           message,
           style: TextStyle(

@@ -29,6 +29,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _confirmPwController =TextEditingController();
 
   String _selectedUserType = 'Student';
+  bool _showDropDown = false;
+  String _selectedCourse = 'INL';
 
   //Register Method
   void register(BuildContext context) {
@@ -65,7 +67,8 @@ class _RegisterPageState extends State<RegisterPage> {
       // Check that all fields are filled
       try {
         String userType = _selectedUserType == 'Student' ? 'Student' : 'Tutor';
-        authService.signUpWithEmailPassword(_studentNrController.text, _emailController.text, _pwController.text, userType);
+        String tutorSubject = _selectedCourse;
+        authService.signUpWithEmailPassword(_studentNrController.text, _emailController.text, _pwController.text, userType, tutorSubject);
       } catch (e) {
         showDialog(
           context: context,
@@ -147,30 +150,54 @@ class _RegisterPageState extends State<RegisterPage> {
 
               const SizedBox(height: 25),
 
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(width: 1, color: Theme.of(context).colorScheme.primary),
-                ),
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 8),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    ToggleButtons(
-                      onPressed: (index) {
-                        setState(() {
-                          _selectedUserType = index == 0 ? 'Student' : 'Tutor';
-                        });
-                      },
-                      isSelected: [_selectedUserType == 'Student', _selectedUserType == 'Tutor'],
-                      children: [
-                        Icon(Icons.school_outlined, size: 24),
-                        Icon(Icons.supervisor_account_outlined, size: 24),
-                      ],
-                    ),
-                    SizedBox(width: 16),
-                    Text(_selectedUserType, style: TextStyle(fontSize: 16)),
-                  ],
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ToggleButtons(
+                    onPressed: (index) {
+                      setState(() {
+                        _selectedUserType = index == 0 ? 'Student' : 'Tutor';
+                        _showDropDown = _selectedUserType == 'Tutor';
+                      });
+                    },
+                    isSelected: [_selectedUserType == 'Student', _selectedUserType == 'Tutor'],
+                    children: [
+                      Icon(Icons.school_outlined, size: 24),
+                      Icon(Icons.supervisor_account_outlined, size: 24),
+                    ],
+                  ),
+                  SizedBox(width: 16),
+                  Text(_selectedUserType, style: TextStyle(fontSize: 16)),
+                ],
+              ),
+              Visibility(
+                visible: _showDropDown,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("What are you tutoring?", style: TextStyle(fontSize: 16)),
+                      SizedBox(width: 16),
+                      DropdownButton<String>(
+                        value: _selectedCourse,
+                        onChanged: (String? newValue) {
+                          if (newValue != null) {
+                            setState(() {
+                              _selectedCourse = newValue;
+                            });
+                          }
+                        },
+                        items: <String>['INL', 'OBS', 'PUB']
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    ],
+                  ),
                 ),
               ),
 
@@ -253,4 +280,5 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 }
+
 
