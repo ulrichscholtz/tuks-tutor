@@ -133,10 +133,11 @@ class _HomePageState extends State<UsersPage> {
               builder: (context) => ChatPage(
                 receiverEmail: userData["email"],
                 receiverID: userData["uid"],
+
               ),
             ),  
           );
-        }
+        }, userType: userData["usertype"],
       );
     } else {
       return Container();

@@ -31,12 +31,24 @@ class ProfilePage extends StatelessWidget {
                   stream: _firestore.collection("Users").doc(_auth.currentUser!.uid).snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      return Text(
-                        snapshot.data!["studentnr"],
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
+                      return Column(
+                        children: [
+                          Text(
+                            snapshot.data!["usertype"],
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            snapshot.data!["studentnr"],
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                        ],
                       );
                     } else {
                       return Text(

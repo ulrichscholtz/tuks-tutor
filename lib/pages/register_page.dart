@@ -152,7 +152,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(width: 1, color: Theme.of(context).colorScheme.primary),
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 8),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [

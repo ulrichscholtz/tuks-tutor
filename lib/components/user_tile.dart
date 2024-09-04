@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 class UserTile extends StatelessWidget {
   final String text;
   final void Function()? onTap;
+  final String userType; // Add a new parameter to accept the user type
+
   const UserTile({
-    super.key, 
+    super.key,
     required this.text,
     required this.onTap,
+    required this.userType, // Make the parameter required
   });
 
   @override
@@ -27,7 +30,7 @@ class UserTile extends StatelessWidget {
               // Avatar
               CircleAvatar(
                 radius: 20,
-                backgroundColor: const Color(0xFFDF3840),
+                backgroundColor: userType == 'Tutor' ? Color(0xFF005BAB) : Color(0xFFDF3840), // Set the avatar color based on the user type
                 child: Icon(
                   Icons.school_outlined,
                   color: Colors.white,

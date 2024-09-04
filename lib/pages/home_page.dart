@@ -98,18 +98,18 @@ class _HomePageState extends State<HomePage> {
     if (userData["email"] != widget._authService.getCurrentUser()!.email) {
       return UserTile(
         text: userData['studentnr'] + ' | ' + userData['email'].split('@')[0],
-        onTap: () {
-          // Tapped on user, go to chat page
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ChatPage(
-                receiverEmail: userData["email"],
-                receiverID: userData["uid"],
+  onTap: () {
+    // Tapped on user, go to chat page
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ChatPage(
+          receiverEmail: userData["email"],
+          receiverID: userData["uid"],
               ),
             ),
           );
-        },
+        }, userType: userData["usertype"],
       );
     } else {
       return Container();
