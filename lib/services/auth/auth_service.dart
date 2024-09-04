@@ -48,15 +48,20 @@ class AuthService {
       password: password
     );
     
+    Map<String, dynamic> userData = {
+      'uid': userCredential.user!.uid,
+      'email': email,
+      'studentnr': studentNr, 
+      'usertype': userType,
+    };
+
+    if (userType == 'Tutor') {
+      userData['tutoring'] = tutorSubject;
+    }
+
     // Save user info in a separate doc
     _firestore.collection("Users").doc(userCredential.user!.uid).set(
-      {
-        'uid': userCredential.user!.uid,
-        'email': email,
-        'studentnr': studentNr, 
-        'usertype': userType,
-        'tutoring': tutorSubject,
-      }
+      userData,
     );
 
     // Save device token

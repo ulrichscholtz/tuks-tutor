@@ -100,8 +100,9 @@ class _HomePageState extends State<HomePage> {
   // Build User List Item
   Widget _buildUserListItem(Map<String, dynamic> userData, BuildContext context) {
     // Display all users except current logged in user
-    if (userData["email"] != widget._authService.getCurrentUser()!.email) {
-      String userText = '${userData['studentnr']} | ${userData['email'].split('@')[0]}';
+    final currentUser = widget._authService.getCurrentUser();
+    if (currentUser != null && userData["email"] != null && userData["email"] != currentUser.email) {
+      String userText = '${userData['studentnr']} | ${userData["email"]!.split('@')[0]}';
       if (userData["usertype"] == "Tutor") {
         userText += ' | ${userData['tutoring']} Tutor';
       }

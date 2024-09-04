@@ -101,10 +101,17 @@ class _ChatPageState extends State<ChatPage> {
                           .get(),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
-                          return Text(
-                            '${snapshot.data!['usertype']} | ${snapshot.data!['tutoring']}',
-                            style: const TextStyle(fontSize: 18),
-                          );
+                          if (snapshot.data!['usertype'] == 'Tutor') {
+                            return Text(
+                              '${snapshot.data!['usertype']} | ${snapshot.data!['tutoring']}',
+                              style: const TextStyle(fontSize: 18),
+                            );
+                          } else {
+                            return Text(
+                              '${snapshot.data!['usertype']}',
+                              style: const TextStyle(fontSize: 18),
+                            );
+                          }
                         } else {
                           return Container();
                         }
