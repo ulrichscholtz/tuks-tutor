@@ -1,6 +1,6 @@
 {
-    "name": "tuks_tutor_dev",
-    "short_name": "tuks_tutor_dev",
+    "name": "tuks_tutor_presentation",
+    "short_name": "tuks_tutor_presentation",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
